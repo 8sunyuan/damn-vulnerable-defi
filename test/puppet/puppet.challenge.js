@@ -95,6 +95,11 @@ describe('[Challenge] Puppet', function () {
 
     it('Execution', async function () {
         /** CODE YOUR SOLUTION HERE */
+
+        console.log(await lendingPool.calculateDepositRequired(PLAYER_INITIAL_ETH_BALANCE));
+        console.log(await token.balanceOf(uniswapExchange.address));
+        await token.transferFrom(player.address, uniswapExchange.address, PLAYER_INITIAL_TOKEN_BALANCE);
+        console.log(await lendingPool.calculateDepositRequired(PLAYER_INITIAL_ETH_BALANCE));
     });
 
     after(async function () {

